@@ -1,2 +1,4 @@
-package com.siyun.movies;public class InvalidUpdateException {
+package com.siyun.movies;
+
+public class InvalidUpdateException extends RuntimeException {
 }
