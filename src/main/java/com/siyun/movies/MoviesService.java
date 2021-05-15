@@ -1,33 +1,50 @@
 package com.siyun.movies;
 
+import com.siyun.movies.Exceptions.MovieNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class MoviesService {
+    MoviesRepository moviesRepository;
+
+    public MoviesService(MoviesRepository moviesRepository) {
+        this.moviesRepository = moviesRepository;
+    }
 
     public MoviesList getMovies() {
-        return null;
+        return new MoviesList(moviesRepository.findAll());
     }
 
     public MoviesList getMoviesByDirector(String director) {
-        return null;
+        return new MoviesList(moviesRepository.findByDirectorContains(director));
     }
 
     public Movie addMovie(Movie movie) {
-        return null;
+        return moviesRepository.save(movie);
     }
 
     public Movie getMovieById(String id) {
-        return null;
+        Optional<Movie> movie = moviesRepository.findById(id);
+        if (!movie.isPresent()) return null;
+        return movie.get();
     }
 
     public Movie updateMovie(String id, MovieUpdate movieUpdate) {
-        return null;
+        Optional<Movie> movie = moviesRepository.findById(id);
+        if (!movie.isPresent()) return null;
+        movie.get().setRating(movieUpdate.getRating());
+        movie.get().setCast(movieUpdate.getCast());
+        return moviesRepository.save(movie.get());
     }
 
     public void deleteMovie(String id) throws MovieNotFoundException {
-        return;
+        Optional<Movie> movie = moviesRepository.findById(id);
+        if (!movie.isPresent()) {
+            throw new MovieNotFoundException();
+        } else {
+            moviesRepository.delete(movie.get());
+        }
     }
 }

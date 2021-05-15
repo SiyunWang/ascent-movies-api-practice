@@ -1,9 +1,10 @@
 package com.siyun.movies;
 
+import com.siyun.movies.Exceptions.InvalidMovieException;
+import com.siyun.movies.Exceptions.InvalidUpdateException;
+import com.siyun.movies.Exceptions.MovieNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/movies")
@@ -52,7 +53,7 @@ public class MoviesController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteMovie(@PathVariable String id) {
+    public ResponseEntity<?> deleteMovie(@PathVariable String id) {
         try {
             moviesService.deleteMovie(id);
             return ResponseEntity.accepted().build();

@@ -1,6 +1,9 @@
 package com.siyun.movies;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.siyun.movies.Exceptions.InvalidMovieException;
+import com.siyun.movies.Exceptions.InvalidUpdateException;
+import com.siyun.movies.Exceptions.MovieNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
