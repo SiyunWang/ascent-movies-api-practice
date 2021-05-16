@@ -25,21 +25,21 @@ public class MoviesService {
         return moviesRepository.save(movie);
     }
 
-    public Movie getMovieById(String id) {
-        Optional<Movie> movie = moviesRepository.findById(id);
+    public Movie getMovieByMovieNumber(String movieNumber) {
+        Optional<Movie> movie = moviesRepository.findByMovieNumber(movieNumber);
         return movie.orElse(null);
     }
 
-    public Movie updateMovie(String id, MovieUpdate movieUpdate) {
-        Optional<Movie> movie = moviesRepository.findById(id);
+    public Movie updateMovie(String movieNumber, MovieUpdate movieUpdate) {
+        Optional<Movie> movie = moviesRepository.findByMovieNumber(movieNumber);
         if (movie.isEmpty()) return null;
         movie.get().setRating(movieUpdate.getRating());
         movie.get().setCast(movieUpdate.getCast());
         return moviesRepository.save(movie.get());
     }
 
-    public void deleteMovie(String id) throws MovieNotFoundException {
-        Optional<Movie> movie = moviesRepository.findById(id);
+    public void deleteMovie(String movieNumber) throws MovieNotFoundException {
+        Optional<Movie> movie = moviesRepository.findByMovieNumber(movieNumber);
         if (movie.isPresent()) {
             moviesRepository.delete(movie.get());
         } else {

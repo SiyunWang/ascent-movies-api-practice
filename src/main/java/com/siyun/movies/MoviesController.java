@@ -37,13 +37,13 @@ public class MoviesController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Movie> getMovieById(@PathVariable String id) {
-        Movie movie = moviesService.getMovieById(id);
+        Movie movie = moviesService.getMovieByMovieNumber(id);
         return movie == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(movie);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable String id, @RequestBody MovieUpdate movieUpdate) {
-        Movie movie = moviesService.getMovieById(id);
+        Movie movie = moviesService.getMovieByMovieNumber(id);
         if (movie == null) return ResponseEntity.noContent().build();
         try {
             return ResponseEntity.ok(moviesService.updateMovie(id, movieUpdate));
