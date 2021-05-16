@@ -77,7 +77,7 @@ class MoviesServiceTest {
         Movie movie = new Movie("CAAF36", "Joker", "Todd Phillips", 2019);
         when(moviesRepository.findById(anyString())).thenReturn(Optional.of(movie));
         // execute
-        Movie movieById = moviesService.getMovieById(movie.getId());
+        Movie movieById = moviesService.getMovieById(movie.getMovieNumber());
         // assert
         assertThat(movieById).isNotNull();
         assertThat(movieById.getName()).isEqualTo("Joker");
@@ -106,7 +106,7 @@ class MoviesServiceTest {
         Movie movie = new Movie("AAB678","La La Land", "Damien Chazelle", 2016);
         when(moviesRepository.findById(anyString())).thenReturn(Optional.of(movie));
         // execute
-        moviesService.deleteMovie(movie.getId());
+        moviesService.deleteMovie(movie.getMovieNumber());
         // verify
         verify(moviesRepository).delete(any(Movie.class));
     }

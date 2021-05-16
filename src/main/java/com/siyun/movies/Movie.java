@@ -1,29 +1,47 @@
 package com.siyun.movies;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Table(name = "movies")
 public class Movie {
-    private String id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String movieNumber;
     private String name;
     private String director;
     private int year;
+    @JsonFormat(pattern = "MM/dd/yyyy")
+    private Date releaseDate;
     private int rating;
     private String[] cast;
 
     public Movie() {}
 
-    public Movie(String id, String name, String director, int year) {
-        this.id = id;
+    public Movie(String movieNumber, String name, String director, int year) {
+        this.movieNumber = movieNumber;
         this.name = name;
         this.director = director;
         this.year = year;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getMovieNumber() {
+        return movieNumber;
+    }
+
+    public void setMovieNumber(String movieNumber) {
+        this.movieNumber = movieNumber;
     }
 
     public String getName() {
@@ -48,6 +66,14 @@ public class Movie {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public int getRating() {

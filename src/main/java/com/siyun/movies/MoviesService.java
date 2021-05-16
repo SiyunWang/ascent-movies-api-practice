@@ -27,13 +27,12 @@ public class MoviesService {
 
     public Movie getMovieById(String id) {
         Optional<Movie> movie = moviesRepository.findById(id);
-        if (!movie.isPresent()) return null;
-        return movie.get();
+        return movie.orElse(null);
     }
 
     public Movie updateMovie(String id, MovieUpdate movieUpdate) {
         Optional<Movie> movie = moviesRepository.findById(id);
-        if (!movie.isPresent()) return null;
+        if (movie.isEmpty()) return null;
         movie.get().setRating(movieUpdate.getRating());
         movie.get().setCast(movieUpdate.getCast());
         return moviesRepository.save(movie.get());
@@ -41,10 +40,10 @@ public class MoviesService {
 
     public void deleteMovie(String id) throws MovieNotFoundException {
         Optional<Movie> movie = moviesRepository.findById(id);
-        if (!movie.isPresent()) {
-            throw new MovieNotFoundException();
-        } else {
+        if (movie.isPresent()) {
             moviesRepository.delete(movie.get());
+        } else {
+            throw new MovieNotFoundException();
         }
     }
 }
