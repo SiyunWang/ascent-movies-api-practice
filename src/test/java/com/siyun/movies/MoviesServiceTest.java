@@ -72,12 +72,12 @@ class MoviesServiceTest {
     }
 
     @Test
-    void getMovieById() {
+    void getMovieByMovieNumber() {
         // setup
         Movie movie = new Movie("CAAF36", "Joker", "Todd Phillips", 2019);
-        when(moviesRepository.findById(anyString())).thenReturn(Optional.of(movie));
+        when(moviesRepository.findByMovieNumber(anyString())).thenReturn(Optional.of(movie));
         // execute
-        Movie movieById = moviesService.getMovieById(movie.getId());
+        Movie movieById = moviesService.getMovieByMovieNumber(movie.getMovieNumber());
         // assert
         assertThat(movieById).isNotNull();
         assertThat(movieById.getName()).isEqualTo("Joker");
@@ -88,7 +88,7 @@ class MoviesServiceTest {
         // setup
         Movie movie = new Movie("AAB678","La La Land", "Damien Chazelle", 2016);
         MovieUpdate update = new MovieUpdate(8, new String[]{"Emma Stone", "Ryan Gosling"});
-        when(moviesRepository.findById(anyString())).thenReturn(Optional.of(movie));
+        when(moviesRepository.findByMovieNumber(anyString())).thenReturn(Optional.of(movie));
         movie.setRating(update.getRating());
         movie.setCast(update.getCast());
         when(moviesRepository.save(any(Movie.class))).thenReturn(movie);
@@ -104,9 +104,9 @@ class MoviesServiceTest {
     void deleteMovieForValidId() {
         // setup
         Movie movie = new Movie("AAB678","La La Land", "Damien Chazelle", 2016);
-        when(moviesRepository.findById(anyString())).thenReturn(Optional.of(movie));
+        when(moviesRepository.findByMovieNumber(anyString())).thenReturn(Optional.of(movie));
         // execute
-        moviesService.deleteMovie(movie.getId());
+        moviesService.deleteMovie(movie.getMovieNumber());
         // verify
         verify(moviesRepository).delete(any(Movie.class));
     }
@@ -114,7 +114,7 @@ class MoviesServiceTest {
     @Test
     void deleteMovieForInvalidId() {
         // setup
-        when(moviesRepository.findById(anyString())).thenReturn(Optional.empty());
+        when(moviesRepository.findByMovieNumber(anyString())).thenReturn(Optional.empty());
         // assert
         assertThatExceptionOfType(MovieNotFoundException.class)
                 .isThrownBy(() -> {

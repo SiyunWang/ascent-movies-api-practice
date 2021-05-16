@@ -94,7 +94,7 @@ class MoviesControllerTest {
     @Test
     void getMovieByIdReturnsMovieForValidId() throws Exception {
         Movie movie = new Movie("AAB678","La La Land", "Damien Chazelle", 2016);
-        when(moviesService.getMovieById(anyString())).thenReturn(movie);
+        when(moviesService.getMovieByMovieNumber(anyString())).thenReturn(movie);
         mockMvc.perform(get("/api/movies/AAB678"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("La La Land"));
@@ -102,7 +102,7 @@ class MoviesControllerTest {
 
     @Test
     void getMovieByIdReturnsNoContentForInvalidId() throws Exception {
-        when(moviesService.getMovieById(anyString())).thenReturn(null);
+        when(moviesService.getMovieByMovieNumber(anyString())).thenReturn(null);
         mockMvc.perform(get("/api/movies/AAB679"))
                 .andExpect(status().isNoContent());
     }
@@ -112,7 +112,7 @@ class MoviesControllerTest {
         Movie movie = new Movie("AAB678","La La Land", "Damien Chazelle", 2016);
         MovieUpdate movieUpdate = new MovieUpdate(8, new String[]{"Emma Stone", "Ryan Gosling"});
 
-        when(moviesService.getMovieById(anyString())).thenReturn(movie);
+        when(moviesService.getMovieByMovieNumber(anyString())).thenReturn(movie);
         movie.setCast(new String[]{"Emma Stone", "Ryan Gosling"});
         movie.setRating(8);
         when(moviesService.updateMovie(anyString(), any(MovieUpdate.class))).thenReturn(movie);
@@ -138,7 +138,7 @@ class MoviesControllerTest {
     @Test
     void updateMovieReturnsBadRequestForInvalidRequest() throws Exception {
         Movie movie = new Movie("AAB678","La La Land", "Damien Chazelle", 2016);
-        when(moviesService.getMovieById(anyString())).thenReturn(movie);
+        when(moviesService.getMovieByMovieNumber(anyString())).thenReturn(movie);
         when(moviesService.updateMovie(anyString(), any(MovieUpdate.class))).thenThrow(InvalidUpdateException.class);
         mockMvc.perform(patch("/api/movies/AAB678")
                         .contentType(MediaType.APPLICATION_JSON)
