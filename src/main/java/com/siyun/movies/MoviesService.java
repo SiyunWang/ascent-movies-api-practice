@@ -32,7 +32,7 @@ public class MoviesService {
 
     public Movie updateMovie(String movieNumber, MovieUpdate movieUpdate) {
         Optional<Movie> movie = moviesRepository.findByMovieNumber(movieNumber);
-        if (movie.isEmpty()) return null;
+        if (!movie.isPresent()) return null;
         movie.get().setRating(movieUpdate.getRating());
         movie.get().setCast(movieUpdate.getCast());
         return moviesRepository.save(movie.get());
