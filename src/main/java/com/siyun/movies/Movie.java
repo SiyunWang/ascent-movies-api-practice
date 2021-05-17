@@ -10,6 +10,7 @@ import java.util.Date;
 public class Movie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String movieNumber;
     private String name;
     private String director;

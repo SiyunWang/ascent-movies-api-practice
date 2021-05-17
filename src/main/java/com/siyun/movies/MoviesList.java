@@ -1,5 +1,7 @@
 package com.siyun.movies;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class MoviesList {
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
     }
+
+    @JsonIgnore
     public boolean isEmpty() {
         return movies.size() == 0;
     }
